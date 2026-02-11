@@ -155,27 +155,94 @@ public:
     // Delete From The Beginning
     void shift()
     {
-        
+        if (length == 0)
+        {
+            cout << "Doubly Linked List Is Empty" << endl;
+            return;
+        }
+
+        Node *temp = head;
+
+        if (length == 1)
+        {
+            head = NULL;
+        }
+        else
+        {
+            head = head->next;
+            head->prev = NULL;
+        }
+
+        delete temp;
+        length--;
     }
 
     // Delete From The End
     void pop()
     {
+        if (length == 0)
+        {
+            cout << "Doubly Linked List Is Empty" << endl;
+            return;
+        }
+
+        if (length == 1)
+        {
+            delete tail;
+            head = nullptr;
+            tail = nullptr;
+            length--;
+            return;
+        }
+
+        Node *temp = tail;
+        tail = tail->prev;
+        tail->next = nullptr;
+
+        delete temp;
+        length--;
     }
 
     // Delete At A Specific Position
     void removeAtIndex(int index)
     {
+        if (index < 0 || index >= length)
+        {
+            cout << "Invalid Index" << endl;
+            return;
+        }
+
+        if (index == 0)
+        {
+            cout << "Doubly Linked List Is Empty" << endl;
+            return;
+        }
+
+        if (index == length - 1)
+        {
+            pop();
+            return;
+        }
+
+        Node *current = head;
+        for (int i = 0; i < index; i++)
+        {
+            current = current->next;
+        }
+
+        current->prev->next = current->next;
+        current->next->prev = current->prev;
+
+        delete current;
+        length--;
     }
+
+    
 
     /*
         TODO: Add Operations:
         1. Searching
         2. Count
-        3. Deletion
-            > At The Beginning
-            > At The End
-            > At A Specific Position
         5. Clear
         6. Get
         7. Set
